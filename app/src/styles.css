@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+.date-nav {
+    display: flex;
+    align-items: center;
+}
+
+.date-title {
+    font-size: 3rem;
+    text-transform: uppercase;
+}
