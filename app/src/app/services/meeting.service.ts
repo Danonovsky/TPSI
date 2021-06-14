@@ -44,4 +44,8 @@ export class MeetingService {
   updateMeeting(meeting: Meeting): void {
     meetings[meetings.findIndex(o => o.id==meeting.id)] = meeting;
   }
+
+  delete(id: number): void {
+    //todo
+  }
 }

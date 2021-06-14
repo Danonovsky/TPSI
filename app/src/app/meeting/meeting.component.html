@@ -6,7 +6,7 @@
         
         <div class="btn-group col-12" role="group">
             <a class="btn btn-outline-warning" routerLink="/meeting-form/{{meeting.id}}">Edit</a>
-            <button class="btn btn-outline-danger">Delete</button>
+            <a class="btn btn-outline-danger" (click)="delete(meeting.id)">Delete</a>
             <button class="btn btn-outline-success" *ngIf="!meeting.isDone" (click)="changeStatus()">Do</button>
             <button class="btn btn-outline-success" *ngIf="meeting.isDone" (click)="changeStatus()">Undo</button>
         </div>
