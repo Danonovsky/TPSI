@@ -10,6 +10,10 @@ import { MeetingComponent } from './meeting/meeting.component';
 import { MeetingFormComponent } from './meeting-form/meeting-form.component';
 import { FormsModule } from '@angular/forms';
 import { PersonFormComponent } from './person-form/person-form.component';
+import { AuthModule } from './auth/auth/auth.module';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,10 @@ import { PersonFormComponent } from './person-form/person-form.component';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    AuthModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
