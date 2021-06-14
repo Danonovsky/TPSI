@@ -1,11 +1,11 @@
 <div class="card me-auto ms-auto mt-2" style="width: 18rem;">
     <div class="card-body">
-        <h5 class="card-title">{{meeting?.title}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{meeting?.person?.name}}</h6>
-        <p class="card-text">{{meeting?.description}}</p>
+        <h5 class="card-title">{{meeting.title}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{meeting.person?.name}}</h6>
+        <p class="card-text">{{meeting.description}}</p>
         
         <div class="btn-group col-12" role="group">
-            <button class="btn btn-outline-warning">Edit</button>
+            <a class="btn btn-outline-warning" routerLink="/meeting-form/{{meeting.id}}">Edit</a>
             <button class="btn btn-outline-danger">Delete</button>
             <button class="btn btn-outline-success" *ngIf="!meeting.isDone" (click)="changeStatus()">Do</button>
             <button class="btn btn-outline-success" *ngIf="meeting.isDone" (click)="changeStatus()">Undo</button>

@@ -7,18 +7,22 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MeetingsComponent } from './meetings/meetings.component';
 import { PeopleComponent } from './people/people.component';
 import { MeetingComponent } from './meeting/meeting.component';
+import { MeetingFormComponent } from './meeting-form/meeting-form.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     MeetingComponent,
     MeetingsComponent,
-    PeopleComponent
+    PeopleComponent,
+    MeetingFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

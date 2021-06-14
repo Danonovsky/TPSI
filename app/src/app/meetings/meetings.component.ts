@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Meeting } from '../models/meeting';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { MeetingService } from '../services/meeting.service';
 
@@ -12,11 +13,39 @@ import { MeetingService } from '../services/meeting.service';
 })
 export class MeetingsComponent implements OnInit {
   date: Date = new Date(Date.now());
+
+  previousDate: Date = new Date();
+  previousDateText?: string;
+
+  nextDate: Date = new Date();
+  nextDateText?: string;
+
   meetings: Meeting[] = [];
 
-  constructor(private meetingService: MeetingService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private meetingService: MeetingService,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    
+    const id = String(this.route.snapshot.paramMap.get('date'));
+    if(id!='null') {
+      this.date = new Date(
+        id.split('.')[1]
+        +'.'+id.split('.')[0]
+        +'.'+id.split('.')[2]
+        );
+    }
+
+    this.previousDate.setDate((this.date.getDate()-1));
+    this.nextDate?.setDate((this.date.getDate()+1));
+
+    this.previousDateText = this.previousDate?.toLocaleDateString();
+    this.nextDateText = this.nextDate?.toLocaleDateString();
+
     this.getMeetings();
   }
 
@@ -27,15 +56,4 @@ export class MeetingsComponent implements OnInit {
   getDateText() : string {
     return this.date.toLocaleDateString();
   }
-
-  increaseDate() : void {
-    this.date.setDate(this.date.getDate() + 1);
-    this.getMeetings();
-  }
-
-  decreaseDate(): void {
-    this.date.setDate(this.date.getDate() - 1);
-    this.getMeetings();
-  }
-
 }

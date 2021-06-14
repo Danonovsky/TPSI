@@ -7,5 +7,5 @@ export interface Meeting {
     title: string;
     description: string;
     isDone: boolean;
-    date: Date
+    date: Date;
 }

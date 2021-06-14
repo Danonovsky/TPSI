@@ -1,5 +1,7 @@
 import { Meeting } from './models/meeting';
 
+export let maxMeetingId: Number = 2;
+
 export let meetings: Meeting[] = [
     {
         id: 1,
