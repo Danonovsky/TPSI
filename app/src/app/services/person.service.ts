@@ -20,7 +20,7 @@ export class PersonService {
   }
 
   getEmptyPerson(): Person {
-    return { id: 0, name: '' };
+    return { id: 0,userId:0, name: '' };
   }
 
   addPerson(person: Person): void {

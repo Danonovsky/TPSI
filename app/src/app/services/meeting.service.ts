@@ -29,7 +29,7 @@ export class MeetingService {
     return {
       id: 0,
       userId: 0,
-      person: {id:0,name:''},
+      person: {id:0,userId:0,name:''},
       title: '',
       description: '',
       isDone: false,
