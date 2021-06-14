@@ -9,6 +9,7 @@ import { PeopleComponent } from './people/people.component';
 import { MeetingComponent } from './meeting/meeting.component';
 import { MeetingFormComponent } from './meeting-form/meeting-form.component';
 import { FormsModule } from '@angular/forms';
+import { PersonFormComponent } from './person-form/person-form.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     MeetingComponent,
     MeetingsComponent,
     PeopleComponent,
-    MeetingFormComponent
+    MeetingFormComponent,
+    PersonFormComponent
   ],
   imports: [
     BrowserModule,
