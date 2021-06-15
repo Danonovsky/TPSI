@@ -5,9 +5,11 @@ import { FormsModule } from '@angular/forms';
 
 import { MeetingService } from '../services/meeting.service';
 import { PersonService } from '../services/person.service';
+import { AuthService } from '../services/auth.service';
 
 import { Meeting } from '../models/meeting';
 import { Person } from '../models/person';
+
 
 @Component({
   selector: 'app-meeting-form',
@@ -24,6 +26,7 @@ export class MeetingFormComponent implements OnInit {
     private route: ActivatedRoute,
     private meetingService: MeetingService,
     private personService: PersonService,
+    private _auth: AuthService,
     private location: Location
     ) { }
 
@@ -40,14 +43,14 @@ export class MeetingFormComponent implements OnInit {
   }
 
   getPeople(): void {
-    this.personService.getPeople().subscribe(o => this.people = o );
+    this.personService.getPeople(this._auth.getUserDetails()[0]['_id']).subscribe(o => this.people = o );
   }
 
   setDate(event: string): void {
     this.meeting.date = new Date(event);
   }
 
-  setPerson(event: number): void {
+  setPerson(event: string): void {
     this.meeting.person = this.people.find(o => o.id==event) as Person;
   }
 

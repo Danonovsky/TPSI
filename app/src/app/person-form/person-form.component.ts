@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import { PersonService } from '../services/person.service';
 import { Person } from '../models/person';
 
+import { AuthService } from '../services/auth.service';
+
 @Component({
   selector: 'app-person-form',
   templateUrl: './person-form.component.html',
@@ -17,6 +19,7 @@ export class PersonFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private personService: PersonService,
+    private _auth: AuthService,
     private location: Location
   ) { }
 
@@ -26,8 +29,8 @@ export class PersonFormComponent implements OnInit {
   }
 
   getPerson(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if(id==0) this.person = this.personService.getEmptyPerson();
+    const id = this.route.snapshot.paramMap.get('id') as string;
+    if(id==null) this.person = this.personService.getEmptyPerson();
     else this.personService.getPerson(id).subscribe(o => this.person = o);
   }
 
@@ -36,7 +39,8 @@ export class PersonFormComponent implements OnInit {
   }
 
   add(): void {
-    this.personService.addPerson(this.person);
+    this.person.userId=this._auth.getUserDetails()[0]['_id'];
+    this.personService.addPerson(this.person).subscribe();
     this.goBack();
   }
 

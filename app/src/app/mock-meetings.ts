@@ -6,7 +6,7 @@ export let meetings: Meeting[] = [
     {
         id: 1,
         userId: 1,
-        person: { id: 1, userId:1, name: 'Super person' },
+        person: { id: '1', userId:'1', name: 'Super person' },
         title: 'Title',
         description: 'Description',
         isDone: false,
@@ -15,7 +15,7 @@ export let meetings: Meeting[] = [
     {
         id: 2,
         userId: 1,
-        person: { id: 1, userId:1, name: 'Super person' },
+        person: { id: '1', userId:'1', name: 'Super person' },
         title: 'Title',
         description: 'Description',
         isDone: true,
