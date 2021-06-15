@@ -15,9 +15,13 @@ router.get('/getAll/:id', async function (req, res) {
             dbo.collection("people").find(query).toArray(function(err, result) {
                 if(err) throw err;
                 else {
-                    result.map(o => { return {id: o._id, userId: o.userId, name: o.name}; });
-                    console.log(result);
-                    res.send({data: result});
+                    //result.map(o => { return {id: o._id, userId: o.userId, name: o.name}; });
+                    newArr = [];
+                    result.forEach((e) => {
+                        newArr.push({id: e._id, userId: e.userId, name: e.name});
+                    });
+                    console.log(newArr);
+                    res.send({data: newArr});
                     //res.send({data: result.map(o => {id: o._id; userId: o.userId; name: o.name })});
                 }
             });

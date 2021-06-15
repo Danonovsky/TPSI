@@ -27,7 +27,6 @@ export class PeopleComponent implements OnInit {
     if(!this._auth.getUserDetails()) this.router.navigate(['/login']);
     else {
       this.getPeople();
-      console.log(this.people);
     }
     
   }

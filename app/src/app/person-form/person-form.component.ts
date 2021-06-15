@@ -31,7 +31,9 @@ export class PersonFormComponent implements OnInit {
   getPerson(): void {
     const id = this.route.snapshot.paramMap.get('id') as string;
     if(id==null) this.person = this.personService.getEmptyPerson();
-    else this.personService.getPerson(id).subscribe(o => this.person = o);
+    else this.personService.getPerson(id).subscribe(o => {
+      this.person = o;
+    });
   }
 
   goBack(): void {
