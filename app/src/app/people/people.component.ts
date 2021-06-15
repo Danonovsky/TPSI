@@ -36,8 +36,7 @@ export class PeopleComponent implements OnInit {
   }
 
   delete(id: string): void {
-    console.log(id);
-    //async request to delete
+    this.personService.deletePerson(id).subscribe();
     this.getPeople();
   }
 

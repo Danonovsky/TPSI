@@ -25,7 +25,6 @@ export class PersonFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPerson();
-    console.log(this.person);
   }
 
   getPerson(): void {
@@ -47,7 +46,7 @@ export class PersonFormComponent implements OnInit {
   }
 
   save(): void {
-    this.personService.updatePerson(this.person);
+    this.personService.updatePerson(this.person).subscribe();
     this.goBack();
   }
 
