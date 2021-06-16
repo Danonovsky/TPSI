@@ -2,14 +2,12 @@
 <table class="table text-center mt-3">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Name</th>
             <th colspan="2">Action</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let person of people">
-            <td>{{person.id}}</td>
             <td>{{person.name}}</td>
             <td><a class="btn btn-outline-warning" routerLink="/person-form/{{person.id}}">Edit</a></td>
             <td><a class="btn btn-outline-danger" (click)="delete(person.id)">Delete</a></td>

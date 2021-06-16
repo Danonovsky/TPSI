@@ -8,7 +8,8 @@ import { Response } from '../models/response';
 import { SingleResponse } from '../models/singleResponse';
 
 import { people } from '../mock-people';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
 //import { resolveAny } from 'dns';
 
 @Injectable({
@@ -17,19 +18,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 export class PersonService {
   baseUrl: string = 'http://localhost:4000/';
 
-  constructor(private _http: HttpClient) { }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      console.error('An error occurred:', error.error);
-    } else {
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    return throwError(
-      'Something bad happened; please try again later.');
-  }
+  constructor(
+    private _http: HttpClient,
+    private _auth: AuthService
+    ) { }
 
   getPeople(id: string): Observable<Person[]> {
     return this._http.get(`${this.baseUrl}people/getAll/${id}`).pipe(map(res => { 
@@ -48,7 +40,7 @@ export class PersonService {
   }
 
   getEmptyPerson(): Person {
-    return { id: '',userId:'', name: '' };
+    return { id: '',userId:this._auth.getUserDetails()[0]['_id'], name: '' };
   }
 
   addPerson(person: Person): Observable<Person> {

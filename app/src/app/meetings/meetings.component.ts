@@ -5,6 +5,7 @@ import { Meeting } from '../models/meeting';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MeetingService } from '../services/meeting.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-meetings',
@@ -24,6 +25,7 @@ export class MeetingsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private _auth: AuthService,
     private meetingService: MeetingService,
     private router: Router
     ) { }
@@ -50,7 +52,10 @@ export class MeetingsComponent implements OnInit {
   }
 
   getMeetings(): void {
-    this.meetingService.getMeetings(this.date).subscribe(meetings => this.meetings = meetings);
+    this.meetingService.getMeetings(this.date,this._auth.getUserDetails()[0]['_id']).subscribe(meetings => {
+      //console.log(meetings);
+      this.meetings = meetings;
+    });
   }
 
   getDateText() : string {

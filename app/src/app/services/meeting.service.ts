@@ -1,23 +1,33 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, of, from } from 'rxjs';
-import { filter} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { Meeting } from '../models/meeting';
 
 import { maxMeetingId, meetings } from '../mock-meetings';
+import { Response } from '../models/response';
+import { SingleResponse } from '../models/singleResponse';
+
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MeetingService {
+  baseUrl: string = 'http://localhost:4000/';
 
-  constructor() { }
+  constructor(
+    private _http: HttpClient,
+    private _auth: AuthService
+    ) { }
 
-  getMeetings(date: Date): Observable<Meeting[]> {
-    const tasks = of(meetings.filter(o => o.date.toLocaleDateString()==date.toLocaleDateString()));
-
-    return tasks;
+  getMeetings(date: Date, id: String): Observable<Meeting[]> {
+    //sDate = date.toLocaleDateString();
+    return this._http.get(`${this.baseUrl}meetings/getAll/${date.toLocaleDateString()}/${id}`).pipe(map(res => { 
+      return (res as Response).data;
+    }));
   }
 
   getMeeting(id: number): Observable<Meeting> {
@@ -28,7 +38,7 @@ export class MeetingService {
   getEmptyMeeting(): Meeting {
     return {
       id: 0,
-      userId: 0,
+      userId: this._auth.getUserDetails()[0]['_id'],
       person: {id:'',userId:'',name:''},
       title: '',
       description: '',
@@ -37,8 +47,9 @@ export class MeetingService {
     };
   }
 
-  addMeeting(meeting: Meeting): void {
-    meetings.push(meeting);
+  addMeeting(meeting: Meeting): Observable<Meeting> {
+    return this._http.post<Meeting>(`${this.baseUrl}meetings/add`,meeting).pipe();
+    //meetings.push(meeting);
   }
 
   updateMeeting(meeting: Meeting): void {

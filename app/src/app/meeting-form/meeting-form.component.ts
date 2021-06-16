@@ -59,8 +59,8 @@ export class MeetingFormComponent implements OnInit {
   }
 
   add(): void {
-    this.meetingService.addMeeting(this.meeting);
-    this.goBack();
+    this.meetingService.addMeeting(this.meeting).subscribe();
+    //this.goBack();
   }
 
   save(): void {
