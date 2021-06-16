@@ -6,6 +6,7 @@ import { PersonService } from '../services/person.service';
 import { Person } from '../models/person';
 
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-person-form',
@@ -20,11 +21,13 @@ export class PersonFormComponent implements OnInit {
     private route: ActivatedRoute,
     private personService: PersonService,
     private _auth: AuthService,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.getPerson();
+    if(!this._auth.getUserDetails()) this.router.navigate(['/login']);
+    else this.getPerson();
   }
 
   getPerson(): void {

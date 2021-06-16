@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  storage: boolean = localStorage.getItem('userData')?true:false;
 }

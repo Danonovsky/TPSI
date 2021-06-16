@@ -31,24 +31,28 @@ export class MeetingsComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    if(!this._auth.getUserDetails()) this.router.navigate(['/login']);
+    else {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     
-    const id = String(this.route.snapshot.paramMap.get('date'));
-    if(id!='null') {
-      this.date = new Date(
-        id.split('.')[1]
-        +'.'+id.split('.')[0]
-        +'.'+id.split('.')[2]
-        );
+      const id = String(this.route.snapshot.paramMap.get('date'));
+      if(id!='null') {
+        this.date = new Date(
+          id.split('.')[1]
+          +'.'+id.split('.')[0]
+          +'.'+id.split('.')[2]
+          );
+      }
+  
+      this.previousDate.setDate((this.date.getDate()-1));
+      this.nextDate?.setDate((this.date.getDate()+1));
+  
+      this.previousDateText = this.previousDate?.toLocaleDateString();
+      this.nextDateText = this.nextDate?.toLocaleDateString();
+  
+      this.getMeetings();
     }
-
-    this.previousDate.setDate((this.date.getDate()-1));
-    this.nextDate?.setDate((this.date.getDate()+1));
-
-    this.previousDateText = this.previousDate?.toLocaleDateString();
-    this.nextDateText = this.nextDate?.toLocaleDateString();
-
-    this.getMeetings();
+    
   }
 
   getMsg(event: string) {

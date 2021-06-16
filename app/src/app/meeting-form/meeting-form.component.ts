@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { MeetingService } from '../services/meeting.service';
 import { PersonService } from '../services/person.service';
@@ -26,12 +27,16 @@ export class MeetingFormComponent implements OnInit {
     private meetingService: MeetingService,
     private personService: PersonService,
     private _auth: AuthService,
-    private location: Location
+    private location: Location,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
-    this.getMeeting();
-    this.getPeople();
+    if(!this._auth.getUserDetails()) this.router.navigate(['/login']);
+    else {
+      this.getMeeting();
+      this.getPeople();
+    }
   }
 
   getMeeting(): void {
