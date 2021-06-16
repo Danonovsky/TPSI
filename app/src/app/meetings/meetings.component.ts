@@ -53,7 +53,6 @@ export class MeetingsComponent implements OnInit {
 
   getMeetings(): void {
     this.meetingService.getMeetings(this.date,this._auth.getUserDetails()[0]['_id']).subscribe(meetings => {
-      //console.log(meetings);
       this.meetings = meetings;
     });
   }

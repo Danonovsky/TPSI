@@ -24,15 +24,15 @@ export class MeetingService {
     ) { }
 
   getMeetings(date: Date, id: String): Observable<Meeting[]> {
-    //sDate = date.toLocaleDateString();
     return this._http.get(`${this.baseUrl}meetings/getAll/${date.toLocaleDateString()}/${id}`).pipe(map(res => { 
       return (res as Response).data;
     }));
   }
 
-  getMeeting(id: number): Observable<Meeting> {
-    let meet = meetings.find(o => o.id === id) as Meeting;
-    return of(meet);
+  getMeeting(id: string): Observable<Meeting> {
+    return this._http.get(`${this.baseUrl}meetings/getOne/${id}`).pipe(map(res => {
+      return (res as SingleResponse).data;
+    }));
   }
 
   getEmptyMeeting(): Meeting {
@@ -52,8 +52,8 @@ export class MeetingService {
     //meetings.push(meeting);
   }
 
-  updateMeeting(meeting: Meeting): void {
-    meetings[meetings.findIndex(o => o.id==meeting.id)] = meeting;
+  updateMeeting(meeting: Meeting): Observable<Meeting> {
+    return this._http.post<Meeting>(`${this.baseUrl}meetings/edit`,meeting).pipe();
   }
 
   delete(id: number): void {

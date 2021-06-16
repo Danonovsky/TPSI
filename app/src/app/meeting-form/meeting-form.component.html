@@ -20,9 +20,9 @@
         </select>
         <label for="meeting-person">Person</label>
     </div>
-</div>
-<div>
-    <button class="btn btn-outline-success col-6" *ngIf="meeting.id==0" (click)="add()">Add</button>
-    <button class="btn btn-outline-success col-6" *ngIf="meeting.id!=0" (click)="save()">Save</button>
-    <button class="btn btn-outline-secondary col-6" (click)="goBack()">Return</button>
+    <div>
+        <button class="btn btn-outline-success col-6" *ngIf="meeting.id==0" (click)="add()">Add</button>
+        <button class="btn btn-outline-success col-6" *ngIf="meeting.id!=0" (click)="save()">Save</button>
+        <button class="btn btn-outline-secondary col-6" (click)="goBack()">Return</button>
+    </div>
 </div>

@@ -19,7 +19,6 @@ import { Person } from '../models/person';
 export class MeetingFormComponent implements OnInit {
   //meeting!: Meeting;
   meeting!: Meeting;
-  myDate: String = 'xD';
   people: Person[] = [];
 
   constructor(
@@ -36,10 +35,9 @@ export class MeetingFormComponent implements OnInit {
   }
 
   getMeeting(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if(id==0) this.meeting = this.meetingService.getEmptyMeeting();
+    const id = this.route.snapshot.paramMap.get('id');
+    if(id == undefined) this.meeting = this.meetingService.getEmptyMeeting();
     else this.meetingService.getMeeting(id).subscribe(o => this.meeting = o);
-    this.myDate = (this.meeting?.date.getFullYear()+"-"+(this.meeting?.date.getUTCMonth()+1)+"-"+this.meeting?.date.getDate());
   }
 
   getPeople(): void {
@@ -60,11 +58,11 @@ export class MeetingFormComponent implements OnInit {
 
   add(): void {
     this.meetingService.addMeeting(this.meeting).subscribe();
-    //this.goBack();
+    this.goBack();
   }
 
   save(): void {
-    this.meetingService.updateMeeting(this.meeting);
+    this.meetingService.updateMeeting(this.meeting).subscribe();
     this.goBack();
   }
 }

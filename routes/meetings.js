@@ -7,7 +7,7 @@ const Meeting = require('../models/meeting');
 var url = "mongodb://localhost:27017/mydb";
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
 
-//theoretically done
+//done
 router.get('/getAll/:date/:id', async function (req, res) {
     try {
         let { date, id } = req.params;
@@ -15,19 +15,29 @@ router.get('/getAll/:date/:id', async function (req, res) {
         let gte = new Date(str);
         let lte = new Date(str);
         lte.setDate(lte.getDate() + 1);
-        console.log(gte,lte);
-        var query = {userId: id, date: { $gte: gte, $lte: lte}};
+        var query = {userId: id, date: { $gte: gte, $lt: lte}};
+        
 
         Meeting.find(query).populate('personId').exec((err, result) => {
             if(err) throw err;
             else {
-                newArr = [];
+                let newArr = [];
                 result.forEach((e) => {
-                    newArr.push(
-                        {id: e._id, userId: e.userId, name: e.name}
-                        );
+                    newArr.push({
+                        id: e._id, 
+                        userId: e.userId, 
+                        person: {
+                            id: e.personId._id,
+                            userId: e.personId.userId,
+                            name: e.personId.name
+                        },
+                        title: e.title,
+                        description: e.description,
+                        isDone: e.isDone,
+                        date: e.date
+                    });
                 });
-                res.status(200).send({data: result});
+                res.status(200).send({data: newArr});
             }
         });
     } catch (error) {
@@ -35,18 +45,34 @@ router.get('/getAll/:date/:id', async function (req, res) {
         res.send({ status: 0, error: error });
     }
 });
+//done
 router.get('/getOne/:id', async function (req, res) {
     try {
         let { id } = req.params;
-        Person.findOne({_id: id}, (err, result) => {
+        console.log(id);
+        Meeting.findOne({_id: id}).populate('personId').exec((err, result) => {
             if(err) throw err;
-            res.status(200).send({data: result});
+            let meeting = {
+                id: result._id, 
+                userId: result.userId, 
+                person: {
+                    id: result.personId._id,
+                    userId: result.personId.userId,
+                    name: result.personId.name
+                },
+                title: result.title,
+                description: result.description,
+                isDone: result.isDone,
+                date: result.date
+            };
+            console.log(meeting);
+            res.status(200).send({status: 1, data: meeting});
         });
     } catch (error) {
         res.send({status: 0, error: error });
     }
 });
-//works
+//done
 router.post('/add', async function (req, res) {
     try {
         const meeting = new Meeting ({
@@ -66,12 +92,18 @@ router.post('/add', async function (req, res) {
         res.send({ status: 0, error: error });
     }
 });
+//done
 router.post('/edit', async function (req, res) {
     try {
-        console.log('Edit: ',req.body);
-        Person.findOneAndUpdate({_id:req.body.id},{$set:{name:req.body.name}}, (err) => {
+        let set = {
+            personId: req.body.person.id,
+            title: req.body.title,
+            description: req.body.description,
+            date: req.body.date
+        };
+        Meeting.findOneAndUpdate({_id:req.body.id},{$set:set}, (err) => {
             if(err) throw err;
-        })
+        });
     } catch (error) {
         res.status(500).send({status: 0, error: error});
     }
