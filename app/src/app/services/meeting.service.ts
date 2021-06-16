@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 
 import { Meeting } from '../models/meeting';
 
-import { maxMeetingId, meetings } from '../mock-meetings';
 import { Response } from '../models/response';
 import { SingleResponse } from '../models/singleResponse';
 
@@ -37,7 +36,7 @@ export class MeetingService {
 
   getEmptyMeeting(): Meeting {
     return {
-      id: 0,
+      id:'',
       userId: this._auth.getUserDetails()[0]['_id'],
       person: {id:'',userId:'',name:''},
       title: '',
@@ -56,7 +55,7 @@ export class MeetingService {
     return this._http.post<Meeting>(`${this.baseUrl}meetings/edit`,meeting).pipe();
   }
 
-  delete(id: number): void {
-    //todo
+  delete(id: string): Observable<string> {
+    return this._http.post<string>(`${this.baseUrl}meetings/delete`,{id:id}).pipe();
   }
 }

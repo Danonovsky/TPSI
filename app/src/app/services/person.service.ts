@@ -7,7 +7,6 @@ import { Person } from '../models/person';
 import { Response } from '../models/response';
 import { SingleResponse } from '../models/singleResponse';
 
-import { people } from '../mock-people';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 //import { resolveAny } from 'dns';

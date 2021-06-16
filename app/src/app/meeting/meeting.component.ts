@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+//import { EventEmitter } from 'stream';
 
 import { Meeting } from '../models/meeting';
 
@@ -13,6 +14,7 @@ export class MeetingComponent implements OnInit {
 
   @Input()
   meeting!: Meeting;
+  @Output() emitter: EventEmitter<string> = new EventEmitter();
 
   constructor(
     private meetingService: MeetingService
@@ -25,7 +27,8 @@ export class MeetingComponent implements OnInit {
     this.meeting.isDone = !this.meeting.isDone;
   }
 
-  delete(id: number): void {
-    this.meetingService.delete(id);
+  delete(id: string): void {
+    this.meetingService.delete(id).subscribe();
+    this.emitter.emit('refresh');
   }
 }

@@ -111,7 +111,7 @@ router.post('/edit', async function (req, res) {
 router.post('/delete', async function (req, res) {
     try {
         console.log(req.body);
-        Person.findOneAndDelete({_id:req.body.id}, (err) => {
+        Meeting.findOneAndDelete({_id:req.body.id}, (err) => {
             if(err) throw err;
         });
     } catch (error) {

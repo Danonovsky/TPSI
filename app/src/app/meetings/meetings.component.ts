@@ -51,6 +51,10 @@ export class MeetingsComponent implements OnInit {
     this.getMeetings();
   }
 
+  getMsg(event: string) {
+    if(event=='refresh') this.getMeetings();
+  }
+
   getMeetings(): void {
     this.meetingService.getMeetings(this.date,this._auth.getUserDetails()[0]['_id']).subscribe(meetings => {
       this.meetings = meetings;

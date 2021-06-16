@@ -19,7 +19,7 @@
           </div>
 
           <div *ngFor="let meeting of meetings">
-            <app-meeting [meeting]="meeting" *ngIf="!meeting?.isDone"></app-meeting>
+            <app-meeting [meeting]="meeting" (emitter)="getMsg($event)" *ngIf="!meeting?.isDone"></app-meeting>
           </div>
 
         </div>
@@ -28,7 +28,7 @@
           <p class="text-center date-title">Done</p>
 
           <div *ngFor="let meeting of meetings">
-            <app-meeting [meeting]="meeting" *ngIf="meeting?.isDone"></app-meeting>
+            <app-meeting [meeting]="meeting" (emitter)="getMsg($event)" *ngIf="meeting?.isDone"></app-meeting>
           </div>
 
         </div>
