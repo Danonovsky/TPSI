@@ -24,7 +24,8 @@ export class MeetingComponent implements OnInit {
   }
 
   changeStatus(): void {
-    this.meeting.isDone = !this.meeting.isDone;
+    this.meetingService.switch(this.meeting).subscribe();
+    this.emitter.emit('refresh');
   }
 
   delete(id: string): void {

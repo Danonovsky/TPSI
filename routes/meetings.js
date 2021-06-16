@@ -49,7 +49,6 @@ router.get('/getAll/:date/:id', async function (req, res) {
 router.get('/getOne/:id', async function (req, res) {
     try {
         let { id } = req.params;
-        console.log(id);
         Meeting.findOne({_id: id}).populate('personId').exec((err, result) => {
             if(err) throw err;
             let meeting = {
@@ -65,7 +64,6 @@ router.get('/getOne/:id', async function (req, res) {
                 isDone: result.isDone,
                 date: result.date
             };
-            console.log(meeting);
             res.status(200).send({status: 1, data: meeting});
         });
     } catch (error) {
@@ -108,9 +106,21 @@ router.post('/edit', async function (req, res) {
         res.status(500).send({status: 0, error: error});
     }
 });
+router.post('/switch', async function (req, res) {
+    try {
+        let set = {
+            isDone: !req.body.isDone
+        };
+        Meeting.findOneAndUpdate({_id:req.body.id},{$set:set}, (err) => {
+            if(err) throw err;
+        });
+    } catch (error) {
+        res.status(500).send({status: 0, error: error});
+    }
+});
+//done
 router.post('/delete', async function (req, res) {
     try {
-        console.log(req.body);
         Meeting.findOneAndDelete({_id:req.body.id}, (err) => {
             if(err) throw err;
         });

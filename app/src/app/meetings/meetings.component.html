@@ -14,9 +14,7 @@
         <div class="col-5 scrollable">
           <p class="text-center date-title">Todo</p>
 
-          <div class="text-center">
-            <a class="btn btn-outline-info" routerLink="/meeting-form">+</a>
-          </div>
+          
 
           <div *ngFor="let meeting of meetings">
             <app-meeting [meeting]="meeting" (emitter)="getMsg($event)" *ngIf="!meeting?.isDone"></app-meeting>
@@ -24,7 +22,13 @@
 
         </div>
 
-        <div class="col-5 offset-2 scrollable">
+        <div class="col-2 fixed-height">
+          <div class="text-center">
+            <a class="btn btn-outline-info" routerLink="/meeting-form">+</a>
+          </div>
+        </div>
+
+        <div class="col-5 scrollable">
           <p class="text-center date-title">Done</p>
 
           <div *ngFor="let meeting of meetings">

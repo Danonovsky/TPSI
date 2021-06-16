@@ -58,4 +58,8 @@ export class MeetingService {
   delete(id: string): Observable<string> {
     return this._http.post<string>(`${this.baseUrl}meetings/delete`,{id:id}).pipe();
   }
+
+  switch(meeting: Meeting): Observable<string> {
+    return this._http.post<string>(`${this.baseUrl}meetings/switch`,{id:meeting.id, isDone: meeting.isDone}).pipe();
+  }
 }
